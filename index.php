@@ -14,17 +14,17 @@
         <div class="container">
             <div class="row align-items-center py-2 justify-contente-between">
                 <div class="col-4">
-                    <h1 class="fs-4">Flamengo Site</h1>
+                    <h1 class="fs-4" ><a class="text-decoration-none" href="index.php">Fly by Day</a></h1>
                     <h2 class="fs-6 lead">Gerenciamento de estoque</h2>
                 </div>
                 <div class="col-8">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-house-fill"></i> Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-people-fill"></i> Fornecedores</a></li>
-                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-box-fill"></i> Produtos</a></li>
-                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-tags-fill"></i> Lojas</a></li>
-                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-stack"></i> Estoque</a></li>
+                            <li class="nav-item"><a class="nav-link" href="index.php"><i class="bi bi-house-fill"></i> Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" href="fornecedores/listar.php"><i class="bi bi-people-fill"></i> Fornecedores</a></li>
+                            <li class="nav-item"><a class="nav-link" href="produtos/listar.php"><i class="bi bi-box-fill"></i> Produtos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="lojas/listar.php"><i class="bi bi-tags-fill"></i> Lojas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="estoque/listar.php"><i class="bi bi-stack"></i> Estoque</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -70,10 +70,10 @@
         </section>
         <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
             <h3><i class="bi bi-file-earmark-text fs-4"></i> Relatórios</h3>
-            <a href="/produtos-por-loja" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-box-seam"></i> Produtos por Loja</a>
-            <a href="" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-people"></i> Produtos por Fornecedor</a>
-            <a href="" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-clipboard-data"></i> Estoque por Produto</a>
-            <a href="" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-exclamation-triangle"></i> Estoque Baixo</a>
+            <a href="relatorios/produtos-por-loja.php" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-box-seam"></i> Produtos por Loja</a>
+            <a href="relatorios/produtos-por-fornecedor.php" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-people"></i> Produtos por Fornecedor</a>
+            <a href="relatorios/estoque-por-produto.php" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-clipboard-data"></i> Estoque por Produto</a>
+            <a href="relatorios/estoque-baixo.php" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-exclamation-triangle"></i> Estoque Baixo</a>
         </section>
     </main>
 
