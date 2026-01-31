@@ -7,7 +7,7 @@
     <title>Gerenciamento de estoque</title>
     <link rel="shortcut icon" href="images/coruja.png" type="image/x-icon" type="image/png">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <header class="border-bottom border-primary-subtle bg-body">
@@ -20,11 +20,11 @@
                 <div class="col-8">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li class="nav-item"><a class="nav-link" href="">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Fornecedores</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Produtos</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Lojas</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Estoque</a></li>
+                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-house-fill"></i> Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-people-fill"></i> Fornecedores</a></li>
+                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-box-fill"></i> Produtos</a></li>
+                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-tags-fill"></i> Lojas</a></li>
+                            <li class="nav-item"><a class="nav-link" href=""><i class="bi bi-stack"></i> Estoque</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -32,7 +32,7 @@
 
     <main class="container my-4">
         <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
-            <h3>Resumo</h3>
+            <h3><i class="bi bi-journal-check fs-4"></i> Resumo</h3>
             <div class="row">
 
                 <div class="col-6 col-md-4">
@@ -69,11 +69,11 @@
             </div>
         </section>
         <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
-            <h3>Relatórios</h3>
-            <a href="/produtos-por-loja" class="btn btn-lg btn-outline-primary my-1">Produtos por Loja</a>
-            <a href="" class="btn btn-lg btn-outline-primary my-1">Produtos por Fornecedor</a>
-            <a href="" class="btn btn-lg btn-outline-primary my-1">Estoque por Produto</a>
-            <a href="" class="btn btn-lg btn-outline-primary my-1">Estoque Baixo</a>
+            <h3><i class="bi bi-file-earmark-text fs-4"></i> Relatórios</h3>
+            <a href="/produtos-por-loja" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-box-seam"></i> Produtos por Loja</a>
+            <a href="" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-people"></i> Produtos por Fornecedor</a>
+            <a href="" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-clipboard-data"></i> Estoque por Produto</a>
+            <a href="" class="btn btn-lg btn-outline-primary my-1"><i class="bi bi-exclamation-triangle"></i> Estoque Baixo</a>
         </section>
     </main>
 
