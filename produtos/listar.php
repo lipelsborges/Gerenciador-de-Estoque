@@ -5,7 +5,6 @@ $titulo = "Produtos |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
 
 
-
 ?>
 
 <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
