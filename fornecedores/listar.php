@@ -15,6 +15,18 @@ require_once BASE_PATH . '/includes/cabecalho.php';
            <i class="bi bi-plus-circle"></i> Adicionar novo fornecedor
         </a>
     </p>
+    <form action="" method="get" class="mx-auto my-4">
+        <div class="row  g-2 justify-content-center mb-3">
+            <div class="col-auto">
+                <input  type="search" name="search" class="form-control" placeholder="Buscar fornecedor...">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+    </form>
 
     <div class="table-responsive">
         <table class="table table-hover caption-top">
