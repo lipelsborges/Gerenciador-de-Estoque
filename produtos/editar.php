@@ -29,6 +29,19 @@ require_once BASE_PATH . '/includes/cabecalho.php';
             <label for="preco" class="form-label">Preço: </label>
             <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="0.00">
 
+            <label for="quantidade" class="form-label">Quantidade: </label>
+            <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" value="0">
+
+            <h4 class="mt-4">Detalhe do Produto</h4>
+            <label for="detalhes" class="form-label">Peso(kg): </label>
+            <input type="number" step="0.01" class="form-control" id="peso" name="peso" value="0.00">  
+
+            <label for="detalhes" class="form-label mt-2">Dimensões (LxAxP): </label>
+            <input type="text" class="form-control" id="dimensoes" name="dimensoes" value="0x0x0">
+
+            <label for="codigo_barras" class="form-label mt-2">Código de Barras: </label>
+            <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" value="0000000000000">
+
             <label for="data_validade" class="form-label">Data de Validade: </label>
             <input type="date" class="form-control" id="data_validade" name="data_validade" value="2025-12-31">
             

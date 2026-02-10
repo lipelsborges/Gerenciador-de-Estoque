@@ -8,7 +8,7 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 ?>
 
 <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
-    <h3><i class="bi bi-clipboard-data"></i> Estoque</h3>
+    <h3><i class="bi bi-clipboard-data"></i> Estoque das Lojas</h3>
     <p>
         <a  class="btn btn-primary" href="inserir.php">
            <i class="bi bi-plus-circle"></i> Novo registro de estoque

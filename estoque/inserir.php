@@ -14,15 +14,21 @@ require_once BASE_PATH . '/includes/cabecalho.php';
     <form action="" method="post" class="w-75 mx-auto">
         <div class="form-group">
             <label for="loja" class="form-label">Loja: </label>
-            <input type="text" class="form-control" id="loja" name="loja">
+            <select class="form-select" name="loja_id" id = "loja">
+                <option value="">Selecione uma loja</option>
+                <option value="">Loja de Eletrônicos</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="produto" class="form-label">Produto: </label>
-            <input type="text" class="form-control" id="produto" name="produto">
+            <label for="produto_id" class="form-label">Produto: </label>
+            <select class="form-select" name="produto_id" id = "produto">
+                <option value="">Selecione um produto</option>
+                <option value="">Smartphone XYZ</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="quantidade" class="form-label">Quantidade: </label>
-            <input type="number" class="form-control" id="quantidade" name="quantidade">
+            <label for="estoque" class="form-label">Estoque: </label>
+            <input type="number" class="form-control" id="estoque" name="estoque" min="0" required>
         </div>
         <a href="listar.php" class="btn btn-secondary my-4"><i class="bi bi-arrow-left-circle"></i> Voltar</a>
         <button class="btn btn-success my-4" type="submit"><i class="bi bi-check-circle"></i>  Salvar</button>
