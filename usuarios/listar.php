@@ -1,6 +1,11 @@
 <?php 
 
 require_once __DIR__ . '/../config.php';
+require_once BASE_PATH . "/src/usuario_crud.php";
+
+$usuarios = buscarUsuario($conexao);
+
+
 $titulo = "Usuários |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
 
@@ -30,7 +35,7 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 
     <div class="table-responsive">
         <table class="table table-hover caption-top">
-            <caption>Quantidade de registros: 0</caption>
+            <caption>Quantidade de registros: <?= count($usuarios) ?></caption>
             <thead class="align-middle table-light">
                 <tr>
                     <th >Id</th>
@@ -40,13 +45,15 @@ require_once BASE_PATH . '/includes/cabecalho.php';
                 </tr>
             </thead>
             <tbody>
+<?php foreach($usuarios as $usuario): ?>
                 <tr>
-                    <td >Id do Usuario..</td>
-                    <td >Nome do Usuário..</td>
-                    <td >Email do Usuário..</td>
+                    <td ><?=$usuario['id'] ?></td>
+                    <td ><?= $usuario['nome'] ?></td>
+                    <td ><?= $usuario['email'] ?></td>
                     <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
                     <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
+<?php endforeach; ?>
             </tbody>
         </table>
     </div>
