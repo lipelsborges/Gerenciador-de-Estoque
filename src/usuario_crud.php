@@ -1,6 +1,6 @@
 <?php
 
-function buscarUsuario(PDO $conexao) {
+function buscarUsuario(PDO $conexao): array {
 
     $sql = "SELECT id,nome, email FROM usuarios ORDER BY id";
     $query = $conexao->prepare($sql);

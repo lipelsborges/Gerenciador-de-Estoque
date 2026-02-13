@@ -3,7 +3,18 @@
 require_once __DIR__ . '/../config.php';
 require_once BASE_PATH . "/src/usuario_crud.php";
 
-$usuarios = buscarUsuario($conexao);
+$erro = null;
+$usuarios = [];
+
+try {
+
+    $usuarios = buscarUsuario($conexao);
+
+} catch (Throwable $error) {
+    $erro = "Erro ao buscar usuários. Detalhes: <br>". $error->getMessage();
+}
+
+
 
 
 $titulo = "Usuários |";
@@ -14,6 +25,11 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 
 <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
     <h3><i class="bi bi-person-circle"></i> Usuários</h3>
+
+    <?php if($erro):  ?>
+    <p class="alert alert-danger text-center"><?=$erro ?></p>
+    <?php endif; ?>
+
     <p>
         <a  class="btn btn-primary" href="inserir.php">
            <i class="bi bi-plus-circle"></i> Adicionar Novo Usuário
