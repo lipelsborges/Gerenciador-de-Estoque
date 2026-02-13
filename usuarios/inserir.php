@@ -1,22 +1,42 @@
 <?php 
 
 require_once __DIR__ . '/../config.php';
+require_once BASE_PATH . "/src/usuario_crud.php";
 require_once BASE_PATH . "/src/utils.php";
 
+
     $erro = null;
-    $msg_success = null;
+    
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
+        $nome = sanitizar($_POST['nome'], 'texto');
+        $email = sanitizar($_POST['email'], 'email');
         $senhaForm = $_POST['senha'];
 
         if(empty($nome) || empty($email) || empty($senhaForm)){
             $erro = "Preencha todos os campos!";
         } else {
-            $senhaCodificada = codificarSenha($senhaForm);
-            echo "$senhaCodificada";
-            $msg_success = "Usuário criado com sucesso!";
+
+            try {
+                //codificar a senha
+                $senhaCodificada = codificarSenha($senhaForm);
+
+                //enviar os dados para o banco
+                inserirUsuario($conexao, $nome, $email, $senhaCodificada);
+
+                //redirecionar para lista de usuarios
+                header('location:listar.php');
+
+                exit;
+            } catch (Throwable $error) {
+                if($error->getCode()=== '23000'){
+                    $erro = "E-mail ja cadastrado. Por favor, use outro e-mail";
+                }else {
+                    $erro = "Erro ao inserir o usuario. <br>". $error->getMessage();
+                }
+                
+            }
+
         }
     }
 
@@ -35,12 +55,12 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome" >
+            <input value= "<?$_POST['nome'] ?? ''?> "type="text" class="form-control" id="nome" name="nome" >
         </div>
 
         <div class="form-group">
             <label for="email" class="form-label">Email: </label>
-            <input type="email" class="form-control" id="email" name="email" >
+            <input value="<?$_POST['nome'] ?? ''?>" type="email" class="form-control" id="email" name="email" >
         </div>
 
         <div class="form-group">
@@ -50,10 +70,6 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 
     <?php if($erro):  ?>
         <br><p class="alert alert-danger text-center"><?=$erro ?></p>
-    <?php endif; ?>
-
-    <?php if($msg_success): ?>
-        <br><p class="alert alert-success text-center"><?=$msg_success?></p>
     <?php endif; ?>
 
         <a href="listar.php" class="btn btn-secondary my-4"><i class="bi bi-arrow-left-circle"></i> Voltar</a>
