@@ -7,4 +7,7 @@
  # BASE URL garante URLs corretos ao gerar links(ex: login.php, fornecedores/listar.php).
  define("BASE_URL", "/curso-php");
 
+ 
+    require_once BASE_PATH .'/src/banco.php';
+
  ?>
