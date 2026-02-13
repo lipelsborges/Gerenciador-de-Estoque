@@ -17,6 +17,17 @@
 </head>
 
 <body>
+
+     <div class="bg-primary text-white py-2">
+        <div class="container">
+            <a href="<?= BASE_URL?>/usuarios/listar.php" class="btn btn-sm btn-outline-light">
+                <i class="bi bi-people"></i> Gerenciar Usuarios
+            </a>
+        </div>
+     </div>
+
+
+
     <header class="border-bottom border-primary-subtle bg-body">
         <div class="container">
             <div class="row align-items-center py-2 justify-contente-between">

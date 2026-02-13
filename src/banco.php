@@ -1,18 +1,18 @@
 <?php 
-    $servidor = "localhost";
+    $servidor = "127.0.0.1";
     $usuario = "root";
     $senha = "";
-    $banco = "flybyday_estoque.sql";
+    $banco = "sys";
 
 
     //Script de conexão
 
     try {
 
-        $sql = new PDO("mysql:host=$servidor; dbname=$banco; charset=utf8", $usuario, $senha);
+        $conexao = new PDO("mysql:host=$servidor; dbname=$banco; charset=utf8", $usuario, $senha);
         
         
-        $sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         //echo"Conexão feita com sucesso!";
     } catch (Throwable $erro) {
