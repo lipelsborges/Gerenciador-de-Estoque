@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/../config.php';
+require_once BASE_PATH . "/src/utils.php";
 
     $erro = null;
     $msg_success = null;
@@ -13,7 +14,9 @@ require_once __DIR__ . '/../config.php';
         if(empty($nome) || empty($email) || empty($senhaForm)){
             $erro = "Preencha todos os campos!";
         } else {
-            $msg_success = "Usuário adicionado!";
+            $senhaCodificada = codificarSenha($senhaForm);
+            echo "$senhaCodificada";
+            $msg_success = "Usuário criado com sucesso!";
         }
     }
 
