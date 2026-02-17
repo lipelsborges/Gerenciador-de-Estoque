@@ -3,6 +3,9 @@
 function sanitizar(mixed $entrada, string $tipo): mixed {
 
     switch($tipo){
+        case 'inteiro':
+            return (int)filter_var($entrada, FILTER_SANITIZE_NUMBER_INT);
+
         case 'email':
             return filter_var($entrada, FILTER_SANITIZE_EMAIL);
 
