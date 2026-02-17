@@ -8,6 +8,13 @@ require_once BASE_PATH . '/src/utils.php';
 $id = sanitizar($_GET['id'], 'inteiro');
 $erro = null;
 
+if(!$id){
+
+    header("location:listar.php");
+    exit;
+
+}
+
 try {
     
     $usuario = buscarUsuarioPorId( $conexao ,$id);

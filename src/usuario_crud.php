@@ -35,3 +35,4 @@ function buscarUsuarioPorId(PDO $conexao, int $id) : ?array {
             $resultado = $query->fetch(PDO::FETCH_ASSOC);
             return $resultado ?: null;
 }
+
