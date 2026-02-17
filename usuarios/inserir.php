@@ -55,12 +55,12 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input value= "<?$_POST['nome'] ?? ''?> "type="text" class="form-control" id="nome" name="nome" >
+            <input value= "<?=$_POST['nome'] ?? ''?> "type="text" class="form-control" id="nome" name="nome" >
         </div>
 
         <div class="form-group">
             <label for="email" class="form-label">Email: </label>
-            <input value="<?$_POST['nome'] ?? ''?>" type="email" class="form-control" id="email" name="email" >
+            <input value="<?=$_POST['email'] ?? ''?>" type="email" class="form-control" id="email" name="email" >
         </div>
 
         <div class="form-group">
