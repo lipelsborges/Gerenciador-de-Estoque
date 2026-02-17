@@ -1,5 +1,15 @@
 <?php 
 
+function dump (mixed $dados):void{
+    
+    echo"<prev>";
+    var_dump($dados);
+    echo "</prev>";
+
+}
+
+
+
 function sanitizar(mixed $entrada, string $tipo): mixed {
 
     switch($tipo){
