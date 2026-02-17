@@ -23,3 +23,15 @@ function inserirUsuario(PDO $conexao, $nome, $email, $senha): void{
     $query->execute();
 
 }
+
+
+function buscarUsuarioPorId(PDO $conexao, int $id) : ?array {
+            $sql = "SELECT * FROM usuarios WHERE id =:id ";
+
+            $query = $conexao->prepare($sql);
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            
+            $query ->execute();
+            $resultado = $query->fetch(PDO::FETCH_ASSOC);
+            return $resultado ?: null;
+}
