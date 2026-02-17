@@ -1,6 +1,12 @@
 <?php 
 
 require_once __DIR__ . '/../config.php';
+
+require_once BASE_PATH . '/src/utils.php';
+
+$id = sanitizar($_GET['id'], 'inteiro');
+
+
 $titulo = "Editar Usuário |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
 
