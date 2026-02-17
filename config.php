@@ -5,9 +5,8 @@
  define('BASE_PATH', __DIR__ . '/');
 
  # BASE URL garante URLs corretos ao gerar links(ex: login.php, fornecedores/listar.php).
- define("BASE_URL", "/fly");
+ define("BASE_URL", "/curso-php");
 
- 
-    require_once BASE_PATH .'/src/banco.php';
+   require_once BASE_PATH .'/src/banco.php';
 
  ?>
