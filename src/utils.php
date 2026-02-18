@@ -32,3 +32,19 @@ function codificarSenha( string $senha): string {
 
     return password_hash($senha, PASSWORD_DEFAULT);
 }
+
+function verificarSenha ( string $senhaForm, string $senhaBanco ): string {
+
+
+    if(password_verify($senhaForm, $senhaBanco)){
+        
+        return $senhaBanco;
+
+    }else {
+
+        return codificarSenha($senhaForm);
+
+    }
+
+
+}
