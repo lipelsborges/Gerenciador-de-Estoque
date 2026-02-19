@@ -4,6 +4,8 @@ require_once __DIR__ . '/../config.php';
 $titulo = "Estoque Baixo |";
 require_once BASE_PATH . '/includes/cabecalho.php';
 
+exigirLogin();
+
 
 ?>
 

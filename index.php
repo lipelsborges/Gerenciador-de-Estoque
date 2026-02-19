@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/config.php';
 
+exigirLogin();
+
 include_once BASE_PATH . '/includes/cabecalho.php';
 
 ?>

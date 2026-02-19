@@ -9,4 +9,6 @@
 
    require_once BASE_PATH .'/src/banco.php';
 
+   require_once BASE_PATH . '/src/autenticacao.php';
+
  ?>

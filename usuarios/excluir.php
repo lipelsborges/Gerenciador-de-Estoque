@@ -6,6 +6,8 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 require_once BASE_PATH . '/src/usuario_crud.php';
 require_once BASE_PATH . '/src/utils.php';
 
+exigirLogin();
+
 $id = sanitizar($_GET['id'], 'inteiro');
 $erro = null;
 

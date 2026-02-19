@@ -4,6 +4,8 @@ require_once __DIR__ . '/../config.php';
 $titulo = "Produtos por Loja |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
 
+exigirLogin();
+
 
 ?>
 

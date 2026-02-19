@@ -4,6 +4,8 @@ require_once __DIR__ . '/../config.php';
 $titulo = "Editar Registro de Estoque |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
 
+exigirLogin();
+
 
 
 ?>
