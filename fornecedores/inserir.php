@@ -3,6 +3,16 @@
 require_once __DIR__ . '/../config.php';
 $titulo = "Adicionar Fornecedor |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH . '/src/fornecedor_crud.php';
+
+$erro = null;
+
+try {
+
+  
+} catch (Throwable $error) {
+    
+}
 
 
 
