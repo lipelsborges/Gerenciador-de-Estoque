@@ -3,6 +3,20 @@
 require_once __DIR__ . '/../config.php';
 $titulo = "Fornecedores |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH . '/src/fornecedor_crud.php';
+
+$erro = null;
+$fornecedores = [];
+
+try {
+
+    $fornecedores = buscarFornecedor($conexao);
+    
+} catch (Throwable $error) {
+
+    $erro = "Erro ao buscar Fornecedor" . $error->getMessage();
+    
+}
 
 
 
@@ -30,7 +44,7 @@ require_once BASE_PATH . '/includes/cabecalho.php';
 
     <div class="table-responsive">
         <table class="table table-hover caption-top">
-            <caption>Quantidade de registros: 0</caption>
+            <caption>Quantidade de registros: <?= count($fornecedores) ?></caption>
             <thead class="align-middle table-light">
                 <tr>
                     <th >ID</th>
@@ -39,12 +53,14 @@ require_once BASE_PATH . '/includes/cabecalho.php';
                 </tr>
             </thead>
             <tbody>
+<?php foreach($fornecedores as $fornecedor): ?>
                 <tr>
-                    <td >Id do fornecedor</td>
-                    <td >Nome do fornecedor</td>
+                    <td ><?= $fornecedor['id'] ?></td>
+                    <td ><?= $fornecedor['nome'] ?></td>
                     <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
                     <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
+<?php endforeach; ?>
             </tbody>
         </table>
     </div>
