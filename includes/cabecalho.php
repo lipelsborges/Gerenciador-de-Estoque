@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row align-items-center py-2 justify-contente-between">
                 <div class="col-4">
-                    <h1 class="fs-4"><a class="text-decoration-none" href="<?= BASE_URL ?>/index.php">Fly By Day</a></h1>
+                    <h1 class="fs-4"><a class="text-decoration-none" href="<?= BASE_URL ?>/index.php">FLY BY DAY</a></h1>
                     <h2 class="fs-6 lead">Gerenciamento de estoque</h2>
                 </div>
                 <div class="col-8">

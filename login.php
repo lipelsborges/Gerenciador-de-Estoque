@@ -10,7 +10,7 @@ include_once BASE_PATH . '/includes/cabecalho.php';
 
 
 <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
-    <h1 class="mb-2">Fly By Day</h1>
+    <h1 class="mb-2">FLY BY DAY</h1>
     <h2 class="fs-6 lead">Gerenciamento de Estoque</h2>
 
     <hr>
