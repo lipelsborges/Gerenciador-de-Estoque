@@ -9,6 +9,15 @@ function buscarFornecedor(PDO $conexao): array {
 
 }
 
+function inserirFornecedor(PDO $conexao, $nome): void {
+    $sql = "INSERT INTO fornecedores(nome)
+            VALUES (:nome)";
+
+    $query = $conexao->prepare($sql);
+    $query->bindValue(':nome', $nome, PDO::PARAM_STR);
+    $query->execute();
+
+}
 
 
 
