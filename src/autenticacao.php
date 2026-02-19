@@ -26,7 +26,7 @@ function exigirLogin(): void {
 
     //Verificando se NÃO EXISTE uma variável de sessão chamada id(Identificador de algum usuário)
     if(!isset($_SESSION['id'])){
-        header("location:". BASE_URL. "/login.php");
+        header("location:". BASE_URL. "/login.php?acesso_proibido");
         exit;
     }
 
