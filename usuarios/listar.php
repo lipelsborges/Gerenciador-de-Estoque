@@ -67,7 +67,7 @@ require_once BASE_PATH . '/includes/cabecalho.php';
                     <td ><?= $usuario['nome'] ?></td>
                     <td ><?= $usuario['email'] ?></td>
                     <td ><a href="editar.php?id=<?=$usuario['id']?>"  class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
-                    <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
+                    <td ><a href="excluir.php?id=<?=$usuario['id']?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
 <?php endforeach; ?>
             </tbody>

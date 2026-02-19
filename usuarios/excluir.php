@@ -1,21 +1,61 @@
-<?php 
+<?php
 
 require_once __DIR__ . '/../config.php';
 $titulo = "Excluir Usuário |";
-require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH . '/includes/cabecalho.php';
+require_once BASE_PATH . '/src/usuario_crud.php';
+require_once BASE_PATH . '/src/utils.php';
 
+$id = sanitizar($_GET['id'], 'inteiro');
+$erro = null;
 
+if (!$id) {
+
+    header("location:listar.php");
+    exit;
+}
+
+try {
+
+    $usuario =  buscarUsuarioPorId($conexao, $id);
+    if (!$usuario) $erro = "Usuário não encontrado!";
+
+} catch (Throwable $error) {
+
+    $erro = "Erro ao buscar usuário: <br>". $error->getMessage();
+
+}
+
+if(isset($_GET['confirmar-exclusao']) && !$erro){
+    try {
+
+        excluirUsuario($conexao, $id);
+        header("location:listar.php");
+        exit;
+
+    } catch (Throwable $error) {
+
+        $erro = "Erro ao exlcuir usuário: <br>". $error->getMessage();
+        
+    }
+}
 
 ?>
 
 <section class="mb-4 border rounded-3 p-4 border-primary-subtle">
     <h3 class="text-center"><i class="bi bi-trash3-fill"></i> Excluir Usuário</h3>
 
+    <?php if ($erro):  ?>
+        <p class="alert alert-danger text-center"><?= $erro ?></p>
+    <?php else: ; ?>
+
     <div class="alert alert-danger w-50 text-center mx-auto">
-        <p>Tem certeza que deseja excluir o usuário <b>Nome do Usuário</b>?</p>
+        <p>Tem certeza que deseja excluir o usuário <b><?= $usuario['nome'] ?? '' ?></b>?</p>
         <a href="listar.php" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Não</a>
-        <a href="" class="btn btn-danger"><i class="bi bi-check-circle"></i> Sim</a>
+        <a href="?id=<?= $usuario['id']?>&confirmar-exclusao" class="btn btn-danger"><i class="bi bi-check-circle"></i> Sim</a>
     </div>
+
+     <?php endif; ?>
 
 </section>
 
