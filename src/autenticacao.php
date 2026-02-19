@@ -29,5 +29,11 @@ function exigirLogin(): void {
         header("location:". BASE_URL. "/login.php?acesso_proibido");
         exit;
     }
+}
+
+function usuarioEstaLogado(): bool {
+
+    iniciarSessao();
+    return isset($_SESSION['id']);
 
 }

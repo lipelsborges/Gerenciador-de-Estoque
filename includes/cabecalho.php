@@ -1,5 +1,8 @@
 <?php
-    require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config.php';
+
+
+
 
 ?>
 
@@ -10,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <title><?=$titulo ?? ''?> Fly By Day - Gerenciamento de estoque</title>
+    <title><?= $titulo ?? '' ?> Fly By Day - Gerenciamento de estoque</title>
     <link rel="shortcut icon" href="<?= BASE_URL ?>/images/coruja.png" type="image/x-icon" type="image/png">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -18,16 +21,37 @@
 
 <body>
 
-     <div class="bg-primary text-white py-2">
-        <div class="container">
-            <a href="<?= BASE_URL?>/usuarios/listar.php" class="btn btn-sm btn-outline-light">
-                <i class="bi bi-people"></i> Gerenciar Usuarios
-            </a>
+    <div class="bg-primary text-white py-2">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <?php if (usuarioEstaLogado()):  ?>
+                    <a href="<?= BASE_URL ?>/usuarios/listar.php" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-people"></i> Gerenciar Usuarios
+                    </a>
+                <?php endif; ?>
+            </div>
+
+            <div class="d-flex align-items-center">
+
+                <?php if (usuarioEstaLogado()):  ?>
+                    <i class="bi bi-person-circle me-2"></i>
+                    <span class="me-3">Olá, pessoa!</span>
+
+                    <a href="<?= BASE_URL ?>/logout.php" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-box-arrow-right me-1"></i> Sair
+                    </a>
+                <?php else: ?>
+                    <i class="bi bi-person-x me-2"></i>
+                    <span class="me-3">Você não está logado(a)!</span>
+                <?php endif; ?>
+            </div>
+
+
         </div>
-     </div>
+    </div>
 
 
-
+<?php if(usuarioEstaLogado()): ?>
     <header class="border-bottom border-primary-subtle bg-body">
         <div class="container">
             <div class="row align-items-center py-2 justify-contente-between">
@@ -47,5 +71,6 @@
                     </nav>
                 </div>
     </header>
+ <?php endif; ?>
 
     <main class="container my-4">
