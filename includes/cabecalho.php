@@ -35,7 +35,7 @@ require_once __DIR__ . '/../config.php';
 
                 <?php if (usuarioEstaLogado()):  ?>
                     <i class="bi bi-person-circle me-2"></i>
-                    <span class="me-3">Olá, pessoa!</span>
+                    <span class="me-3">Olá, !</span>
 
                     <a href="<?= BASE_URL ?>/logout.php" class="btn btn-sm btn-outline-light">
                         <i class="bi bi-box-arrow-right me-1"></i> Sair
