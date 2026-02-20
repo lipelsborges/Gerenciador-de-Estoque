@@ -37,3 +37,11 @@ function usuarioEstaLogado(): bool {
     return isset($_SESSION['id']);
 
 }
+
+function login(int $id, string $nome): void{
+
+        iniciarSessao();
+        $_SESSION[' id'] = $id;
+        $_SESSION['nome'] = $nome;
+
+}
