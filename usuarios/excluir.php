@@ -11,6 +11,11 @@ exigirLogin();
 $id = sanitizar($_GET['id'], 'inteiro');
 $erro = null;
 
+if($id === $_SESSION['id']){
+    $erro = $_SESSION['nome']. ", você não pode excluir a si mesmo!";
+}
+
+
 if (!$id) {
 
     header("location:listar.php");
