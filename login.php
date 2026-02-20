@@ -1,7 +1,9 @@
 <?php
+
 require_once __DIR__ . '/config.php';
 require_once BASE_PATH . '/src/utils.php';
 require_once BASE_PATH . '/src/usuario_crud.php';
+
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
 
@@ -16,9 +18,12 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
    $usuario = buscarPorEmail($conexao, $email);
 
    if($usuario && password_verify($senha, $usuario['senha'])){
-        echo "ok, senhas iguais(digitada e a existente no banco)";
-   }else {
-        echo "opa, senhas diferentes...deu ruim";
+        login($usuario['id'], $usuario['nome']);
+        header("location:index.php");
+        exit;
+    }else {
+        header("location:login.php?login_invalido");
+        exit();
    }
 
 }
@@ -27,7 +32,9 @@ $mensagem = [
     'acesso_proibido' => ['Acesso proibido! Você precisa estar logado(a) para
                            acessar esta página!', 'danger'],
 
-    'campos_obrigatorios' => ['Campos obrigatórios não preenchidos.' ,'warning']
+    'campos_obrigatorios' => ['<strong>Campos obrigatórios não preenchidos.</strong>' ,'warning'],
+    'login_invalido' => ['<strong>E-mail e/ou senha inválidos</strong>', 'danger'],
+    'logout' => ['<strong>Você saiu do sistema com sucesso!</strong>', 'success']
 ];
 
 $titulo = "Login |";
