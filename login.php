@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/config.php';
 require_once BASE_PATH . '/src/utils.php';
+require_once BASE_PATH . '/src/usuario_crud.php';
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
 
@@ -12,7 +13,13 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         exit;
     }
 
-   
+   $usuario = buscarPorEmail($conexao, $email);
+
+   if($usuario && password_verify($senha, $usuario['senha'])){
+        echo "ok, senhas iguais(digitada e a existente no banco)";
+   }else {
+        echo "opa, senhas diferentes...deu ruim";
+   }
 
 }
 
