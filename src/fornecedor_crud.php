@@ -19,6 +19,27 @@ function inserirFornecedor(PDO $conexao, $nome): void {
 
 }
 
+function excluirFornecedor(PDO $conexao, $id): void{
+
+    $sql = "DELETE FROM fornecedores WHERE id= :id";
+
+    $query = $conexao->prepare($sql);
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+
+};
+
+function buscarFornecedorPorId(PDO $conexao, $id){
+
+    $sql = "SELECT * FROM fornecedores WHERE id = :id";
+
+    $query = $conexao->prepare($sql);
+    $query-> bindValue(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+
+
+}
+
 
 
 ?>
