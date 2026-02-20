@@ -25,6 +25,7 @@ function inserirUsuario(PDO $conexao, $nome, $email, $senha): void{
 }
 
 
+//a interrogação no array indica array || NULL;
 function buscarUsuarioPorId(PDO $conexao, int $id) : ?array {
             $sql = "SELECT * FROM usuarios WHERE id =:id ";
 
@@ -61,4 +62,16 @@ function excluirUsuario(PDO $conexao, $id): void{
 
 
 
+}
+
+
+function buscarPorEmail(PDO $conexao, $email): ?array{
+
+    $sql = "SELECT * FROM usuarios WHERE email = :email";
+
+    $query = $conexao->prepare($sql);
+    $query->bindValue(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    $usuario = $query->fetch(PDO::FETCH_ASSOC);
+    return $usuario ?: null;
 }
