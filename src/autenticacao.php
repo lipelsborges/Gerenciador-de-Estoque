@@ -41,7 +41,16 @@ function usuarioEstaLogado(): bool {
 function login(int $id, string $nome): void{
 
         iniciarSessao();
-        $_SESSION[' id'] = $id;
+        $_SESSION['id'] = $id;
         $_SESSION['nome'] = $nome;
+
+}
+
+function logout():void{
+
+    iniciarSessao();
+    session_destroy();
+    header("location:". BASE_URL . "/login.php?logout");
+    exit;    
 
 }
