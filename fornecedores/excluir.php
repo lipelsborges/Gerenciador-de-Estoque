@@ -3,8 +3,14 @@
 require_once __DIR__ . '/../config.php';
 $titulo = "Excluir Fornecedor |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH . '/src/utils.php';
+require_once BASE_PATH . '/src/fornecedor_crud.php';
 
 exigirLogin();
+
+$id = sanitizar($_GET['id'], 'inteiro');
+$erro = null;
+
 
 
 
