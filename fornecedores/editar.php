@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
 
-            editarFornecedor($conexao, $id, $nome);
+            atualizarFornecedor($conexao, $id, $nome);
 
             $_SESSION['sucesso'] = '<strong>Fornecedor editado com sucesso!</strong>';
 
