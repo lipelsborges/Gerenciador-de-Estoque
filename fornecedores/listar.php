@@ -1,5 +1,8 @@
 <?php 
 
+
+session_start();
+
 require_once __DIR__ . '/../config.php';
 $titulo = "Fornecedores |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
@@ -44,6 +47,14 @@ try {
         </div>
     </form>
 
+<?php if (isset($_SESSION['sucesso'])):  ?>
+        <div class="alert alert-success text-center">
+            <?= $_SESSION['sucesso']; ?>
+        </div>
+    <?php unset($_SESSION['sucesso']); // Remove para não repetir a mensagem ?>
+
+<?php endif; ?>
+
     <div class="table-responsive">
         <table class="table table-hover caption-top">
             <caption>Quantidade de registros: <?= count($fornecedores) ?></caption>
@@ -59,8 +70,8 @@ try {
                 <tr>
                     <td ><?= $fornecedor['id'] ?></td>
                     <td ><?= $fornecedor['nome'] ?></td>
-                    <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
-                    <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
+                    <td ><a href="editar.php?id=<?= $fornecedor['id'] ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                    <td ><a href="excluir.php?id=<?= $fornecedor['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
 <?php endforeach; ?>
             </tbody>
