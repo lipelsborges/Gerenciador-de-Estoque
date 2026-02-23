@@ -29,7 +29,7 @@ function excluirFornecedor(PDO $conexao, $id): void{
 
 };
 
-function buscarFornecedorPorId(PDO $conexao, $id){
+function buscarFornecedorPorId(PDO $conexao, $id): ?array{
 
     $sql = "SELECT * FROM fornecedores WHERE id = :id";
 
@@ -37,9 +37,19 @@ function buscarFornecedorPorId(PDO $conexao, $id){
     $query-> bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
 
-
+    $resultado =  $query->fetch(PDO::FETCH_ASSOC);
+    return $resultado ?: null;
 }
 
+function editarFornecedor(PDO $conexao, $id, $nome): void {
 
+    $sql = "UPDATE fornecedores SET nome = :nome WHERE id = :id";
+
+    $query = $conexao->prepare($sql);
+    $query->bindValue(':nome', $nome, PDO::PARAM_STR);
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+
+}
 
 ?>
