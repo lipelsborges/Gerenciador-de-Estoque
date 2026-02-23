@@ -19,7 +19,7 @@ try {
     
 } catch (Throwable $error) {
 
-    $erro = "Erro ao buscar Fornecedor" . $error->getMessage();
+    $erro = "Erro ao buscar Fornecedores" . $error->getMessage();
     
 }
 

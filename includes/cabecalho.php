@@ -52,7 +52,7 @@ require_once __DIR__ . '/../config.php';
 
 
 <?php if(usuarioEstaLogado()): ?>
-    <header class="border-bottom border-primary-subtle bg-body">
+    <header class="sticky-top border-bottom border-primary-subtle bg-body">
         <div class="container">
             <div class="row align-items-center py-2 justify-contente-between">
                 <div class="col-4">

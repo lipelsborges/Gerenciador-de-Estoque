@@ -5,6 +5,21 @@ require_once __DIR__ . '/config.php';
 exigirLogin();
 
 include_once BASE_PATH . '/includes/cabecalho.php';
+include_once BASE_PATH . '/src/fornecedor_crud.php';
+
+$fornecedor = [];
+$erro = null;
+
+
+try {
+
+    $fornecedor = buscarFornecedor($conexao);
+
+} catch (Throwable $error) {
+
+    $erro = "Erro ao buscar Fornecedores!". $error->getMessage();
+
+}
 
 ?>
 
@@ -18,7 +33,7 @@ include_once BASE_PATH . '/includes/cabecalho.php';
 
         </div>
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary">0</span></h4>
+            <h4><span class="badge text-bg-primary"><?= count($fornecedor) ?></span></h4>
             <p><b>Fornecedores</b></p>
 
         </div>
