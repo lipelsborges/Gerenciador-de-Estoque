@@ -41,7 +41,7 @@ require_once BASE_PATH . '/includes/cabecalho.php';
     <form action="" method="get" class="mx-auto my-4">
         <div class="row  g-2 justify-content-center mb-3">
             <div class="col-auto">
-                <input  type="search" name="search" class="form-control" placeholder="Buscar loja...">
+                <input  type="search" name="search" class="form-control" placeholder="Buscar Usuario...">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-success w-100">
