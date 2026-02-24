@@ -7,8 +7,10 @@ exigirLogin();
 include_once BASE_PATH . '/includes/cabecalho.php';
 include_once BASE_PATH . '/src/fornecedor_crud.php';
 include_once BASE_PATH .'/src/produtos_crud.php';
+include_once BASE_PATH .'src/lojas_crud.php';
 
 $fornecedor = [];
+$lojas = [];
 $produtos = [];
 $erro = null;
 
@@ -33,6 +35,19 @@ try {
 
 }
 
+
+try {
+
+    $lojas = buscarLoja($conexao);
+
+
+} catch (Throwable $error) {
+    
+    $erro = 'Erro ao buscar as Lojas'. $error -> getMessage();
+
+}
+
+
 ?>
 
 <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
@@ -50,7 +65,7 @@ try {
 
         </div>
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary">0</span></h4>
+            <h4><span class="badge text-bg-primary"><?= count($lojas) ?></span></h4>
             <p><b>Lojas ativas</b></p>
 
         </div>

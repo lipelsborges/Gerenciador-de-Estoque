@@ -3,8 +3,24 @@
 require_once __DIR__ . '/../config.php';
 $titulo = "Lojas |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH . '/src/lojas_crud.php';
+require_once BASE_PATH .'/src/utils.php';
 
 exigirLogin();
+
+$erro = null;
+$lojas = [];
+
+try {
+
+    $lojas = buscarLoja($conexao);
+
+
+} catch (Throwable $error) {
+    
+    $erro = 'Erro ao buscar as Lojas'. $error -> getMessage();
+
+}
 
 
 ?>
@@ -30,6 +46,10 @@ exigirLogin();
         </div>
     </form>
 
+      <?php if($erro):  ?>
+        <p class="alert alert-danger text-center"><?=$erro ?></p>
+    <?php endif; ?>
+
     <div class="table-responsive">
         <table class="table table-hover caption-top">
             <caption>Quantidade de registros: 0</caption>
@@ -41,12 +61,14 @@ exigirLogin();
                 </tr>
             </thead>
             <tbody>
+<?php foreach($lojas as $loja): ?>
                 <tr>
-                    <td >1</td>
-                    <td >Loja de Eletrônicos</td>
+                    <td ><?= $loja['id'] ?></td>
+                    <td ><?= $loja['nome'] ?></td>
                     <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
                     <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
+<?php endforeach; ?>
             </tbody>
         </table>
     </div>
