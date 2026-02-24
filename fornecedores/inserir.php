@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             inserirFornecedor($conexao, $nome);
             header('location:listar.php');
+            exit;
 
         } catch (Throwable $error) {
 
