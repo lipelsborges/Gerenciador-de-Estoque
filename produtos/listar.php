@@ -1,10 +1,28 @@
 <?php 
 
+session_start();
 require_once __DIR__ . '/../config.php';
 $titulo = "Produtos |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH .'/src/produtos_crud.php';
+require_once BASE_PATH .'/src/utils.php';
 
 exigirLogin();
+
+$erro = null;
+$produtos = [];
+
+try {
+
+    $produtos = buscarProduto($conexao);
+
+    
+} catch (Throwable $error) {
+
+    $erro = "Erro ao buscar o produto <br>" . $error->getMessage();
+    
+}
+
 
 
 ?>
@@ -30,9 +48,13 @@ exigirLogin();
         </div>
     </form>
 
+    <?php if($erro):  ?>
+        <p class="alert alert-danger text-center"><?=$erro ?></p>
+    <?php endif; ?>
+
     <div class="table-responsive">
         <table class="table table-hover caption-top">
-            <caption>Quantidade de registros: 0</caption>
+            <caption>Quantidade de registros: <?= count($produtos) ?></caption>
             <thead class="align-middle table-light">
                 <tr>
                     <th >Nome</th>
@@ -44,15 +66,17 @@ exigirLogin();
                 </tr>
             </thead>
             <tbody>
+ <?php foreach($produtos as $produto): ?>               
                 <tr>
-                    <td >Ultrabook</td>
-                    <td >Equipamento de última geração</td>
-                    <td >Asus</td>
-                    <td >R$ 3.499,12</td>
-                    <td >2025-12-31</td>
+                    <td ><?= $produto['nome'] ?></td>
+                    <td ><?= $produto['descricao'] ?></td>
+                    <td ><?= $produto['Nome_Fornecedor'] ?></td>
+                    <td ><?= $produto['preco'] ?></td>
+                    <td ><?= $produto['data_validade'] ?></td>
                     <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
                     <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
+<?php endforeach; ?>
             </tbody>
         </table>
     </div>
