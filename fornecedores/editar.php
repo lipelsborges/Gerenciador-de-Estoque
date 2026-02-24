@@ -21,7 +21,7 @@ if (!$id) {
 try {
 
     $fornecedor = buscarFornecedorPorId($conexao, $id);
-    if (!$usuario) $erro = "Fornecedor não encontrado!";
+    if (!$fornecedor) $erro = "Fornecedor não encontrado!";
     
 
 } catch (Throwable $error) {
@@ -66,19 +66,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h3 class="text-center"><i class="bi bi-pencil-fill"></i> Editar Fornecedor</h3>
 
     <?php if ($erro):  ?>
-        <br>
         <p class="alert alert-danger text-center"><?= $erro ?></p>
     <?php endif; ?>
     <?php if ($sucess):  ?>
-        <br>
         <p class="alert alert-danger text-center"><?= $sucess ?></p>
     <?php endif; ?>
 
     <form action="" method="post" class="w-75 mx-auto">
-        <input type="hidden" name="id" value="Id do fornecedor">
+        <input type="hidden" name="id" value="<?= $fornecedor['id'] ?? '' ?>">
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome" value="<?= $fornecedor['nome'] ?>">
+            <input type="text" class="form-control" id="nome" name="nome" value="<?= $fornecedor['nome'] ?? '' ?>">
         </div>
         <button class="btn btn-warning my-4" type="submit"><i class="bi bi-arrow-clockwise"></i> Salvar Alterações</button>
     </form>

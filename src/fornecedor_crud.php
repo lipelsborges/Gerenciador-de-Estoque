@@ -29,7 +29,7 @@ function excluirFornecedor(PDO $conexao, $id): void{
 
 };
 
-function buscarFornecedorPorId(PDO $conexao, $id): ?array{
+function buscarFornecedorPorId(PDO $conexao, int $id): ?array{
 
     $sql = "SELECT * FROM fornecedores WHERE id = :id";
 
@@ -41,7 +41,7 @@ function buscarFornecedorPorId(PDO $conexao, $id): ?array{
     return $resultado ?: null;
 }
 
-function atualizarFornecedor(PDO $conexao, $id, $nome): void {
+function atualizarFornecedor(PDO $conexao, int $id, string $nome): void {
 
     $sql = "UPDATE fornecedores SET nome = :nome WHERE id = :id";
 
