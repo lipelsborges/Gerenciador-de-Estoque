@@ -6,8 +6,10 @@ exigirLogin();
 
 include_once BASE_PATH . '/includes/cabecalho.php';
 include_once BASE_PATH . '/src/fornecedor_crud.php';
+include_once BASE_PATH .'/src/produtos_crud.php';
 
 $fornecedor = [];
+$produtos = [];
 $erro = null;
 
 
@@ -21,6 +23,16 @@ try {
 
 }
 
+try {
+
+    $produtos = buscarProduto($conexao);
+    
+} catch (Throwable $error) {
+
+    $error = 'Erro ao buscar Produtos!'. $error->getMessage();
+
+}
+
 ?>
 
 <section class="text-center mb-4 border rounded-3 p-4 border-primary-subtle">
@@ -28,7 +40,7 @@ try {
     <div class="row">
 
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary">0</span></h4>
+            <h4><span class="badge text-bg-primary"><?= count($produtos) ?></span></h4>
             <p><b>Produtos cadastrados</b></p>
 
         </div>
