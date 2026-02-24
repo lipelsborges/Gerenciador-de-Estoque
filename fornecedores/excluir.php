@@ -36,7 +36,7 @@ if(isset($_GET['confirmar-exclusao']) && !$erro)
 
         if($error->getCode()=== '23000'){
             $erro = "<b>".$fornecedor['nome']. "</b> está vinculado a outros registros no banco de dados
-            , e não pode ser exclído.";
+            , e não pode ser excluído.";
 
         }else{
             $erro = "Erro ao excluir fornecedor: <br>". $error->getMessage();
