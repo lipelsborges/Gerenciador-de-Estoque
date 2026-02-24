@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="post" class="w-75 mx-auto">
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome" value="<?= $_POST['nome'] ?? ''?>">
+            <input required type="text" class="form-control" id="nome" name="nome" value="<?= $_POST['nome'] ?? ''?>">
         </div>
         <button class="btn btn-success my-4" type="submit"><i class="bi bi-check-circle"></i> Salvar</button>
     </form>
