@@ -3,9 +3,21 @@
 require_once __DIR__ . '/../config.php';
 $titulo = "Estoque |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
+require_once BASE_PATH . '/src/estoque_crud.php';
 
 exigirLogin();
+$erro = null;
+$lojas = [];
 
+try {
+    
+    $lojas = buscarEstoque($conexao);
+
+} catch (Throwable $error) {
+
+    $erro = 'Erro ao buscar Estoque '. $error->getMessage();
+    
+}
 
 ?>
 
@@ -42,13 +54,15 @@ exigirLogin();
                 </tr>
             </thead>
             <tbody>
+<?php foreach($lojas as $loja): ?>
                 <tr>
-                    <td >Loja de Eletrônicos</td>
-                    <td >Notebook</td>
-                    <td >95</td>
+                    <td ><?= $loja['Nome_loja'] ?></td>
+                    <td ><?= $loja['Nome_Produto'] ?></td>
+                    <td ><?= $loja['estoque'] ?></td>
                     <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
                     <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
+<?php endforeach; ?>
             </tbody>
         </table>
     </div>
