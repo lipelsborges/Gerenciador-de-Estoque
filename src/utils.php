@@ -48,3 +48,12 @@ function verificarSenha ( string $senhaForm, string $senhaBanco ): string {
 
 }
 
+function formatarData(?string $data):string 
+{
+    return $data ? date("d/m/Y", strtotime($data)) : "-";
+}
+
+function formatarPreco(float $preco): string
+{
+    return "R$ " . number_format($preco, 2, ",", ".");
+}
