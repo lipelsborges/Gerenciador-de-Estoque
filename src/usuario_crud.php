@@ -17,7 +17,7 @@ function inserirUsuario(PDO $conexao, $nome, $email, $senha): void{
 
     $query = $conexao->prepare($sql);
     $query->bindValue(':nome', $nome, PDO::PARAM_STR);
-    $query-> bindValue(':email', $email, PDO::PARAM_STR);
+    $query->bindValue(':email', $email, PDO::PARAM_STR);
     $query->bindValue(':senha', $senha, PDO::PARAM_STR);
 
     $query->execute();
