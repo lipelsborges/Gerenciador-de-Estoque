@@ -44,7 +44,7 @@ try {
 
     <div class="table-responsive">
         <table class="table table-hover caption-top">
-            <caption>Quantidade de registros: 0</caption>
+            <caption>Quantidade de registros: <?= count($lojas) ?></caption>
             <thead class="align-middle table-light">
                 <tr>
                     <th >Loja</th>
@@ -56,8 +56,8 @@ try {
             <tbody>
 <?php foreach($lojas as $loja): ?>
                 <tr>
-                    <td ><?= $loja['Nome_loja'] ?></td>
-                    <td ><?= $loja['Nome_Produto'] ?></td>
+                    <td ><?= $loja['nome_loja'] ?></td>
+                    <td ><?= $loja['nome_produto'] ?></td>
                     <td ><?= $loja['estoque'] ?></td>
                     <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
                     <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
