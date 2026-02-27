@@ -4,8 +4,8 @@
 
 
     $sql = "SELECT 
-	    l.nome 'Nome_loja',
-        pr.nome 'Nome_Produto',
+	    l.nome 'nome_loja' ,
+        pr.nome 'nome_produto',
 	    lp.estoque
     FROM sys.lojas_produtos lp
     INNER JOIN lojas l ON l.id = lp.loja_id
@@ -20,12 +20,13 @@
 
 function inserirEstoque($conexao, $nomeL, $nomeP, $estoque):void {
 
-    $sql = 'INSERT INTO sys.lojas_produtos (Nome_loja, Nome_Produto, estoque)
-    VALUES (:Nome_loja, :Nome_Produto, :estoque)';
+
+    $sql = 'INSERT INTO sys.lojas_produtos (nome_loja, nome_produto, estoque)
+    VALUES (:nome_loja, :nome_produto, :estoque)';
 
     $query = $conexao->prepare($sql);
-    $query->bindValue(':Nome_loja', $nomeL);
-    $query->bindValue(':Nome_Produto', $nomeP);
+    $query->bindValue(':nome_loja', $nomeL);
+    $query->bindValue(':nome_produto', $nomeP);
     $query->bindValue(':estoque', $estoque);
     $query->execute();
 
