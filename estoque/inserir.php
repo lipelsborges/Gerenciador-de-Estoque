@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
 
-            inserirEstoque($conexao, $_POST['loja_id'], $_POST['produto_nome'], $estoque);
+            inserirEstoque($conexao, $_POST['loja_id'], $_POST['produto_id'], $estoque);
             header('location:listar.php');
             exit;
 
