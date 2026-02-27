@@ -10,19 +10,30 @@ function dump (mixed $dados):void{
 
 
 
-function sanitizar(mixed $entrada, string $tipo): mixed {
+function sanitizar(mixed $entrada, ?string $tipo = null): mixed {
 
     switch($tipo){
         case 'inteiro':
             return (int)filter_var($entrada, FILTER_SANITIZE_NUMBER_INT);
 
+        case 'float':
+            return (float)filter_var($entrada, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
         case 'email':
             return trim(filter_var($entrada, FILTER_SANITIZE_EMAIL));
+            
+        case 'data':
+            return preg_replace('/[^0-9\/\-\.]/', '', $entrada);
+            
+        case 'dimensao':
+            $entrada = str_replace(' ', '', $entrada);
+            $limpo = preg_replace('/[^0-9xX\.,]/', '', $entrada);
+            
+            return strtolower($limpo);
 
         case 'texto':
-            default:
+        default:
                 return trim(filter_var($entrada, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-
     }
 
 }
