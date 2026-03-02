@@ -4,6 +4,7 @@
 function buscarProduto(PDO $conexao, string $busca = ''): array {
 
     $sql = 'SELECT 
+            pr.id,
             pr.nome,
             pr.descricao,
             f.nome "fornecedor",
@@ -68,4 +69,30 @@ function inserirDetalhesDoProduto(PDO $conexao, array $detalhes):void {
 
     $query->bindValue(":data_validade", $detalhes['data_validade'], is_null($detalhes['data_validade']) ? PDO::PARAM_NULL : PDO::PARAM_STR);
     $query->execute();
+}
+
+function buscarProdutoPorId(PDO $conexao, int $id): ?array {
+
+    $sql = 'SELECT 
+            pr.id,
+            pr.nome,
+            pr.descricao,
+            pr.preco,
+            pr.quantidade,
+            f.id "fornecedor_id",
+            dpr.id"detalhe_id",
+            dpr.data_validade,
+            dpr.peso,
+            dpr.dimensoes,
+            dpr.codigo_barras
+        FROM sys.produtos pr
+        LEFT JOIN fornecedores f on f.id = pr.fornecedor_id
+        LEFT JOIN detalhes_produto dpr on dpr.produto_id = pr.id
+        WHERE pr.id = :id';
+    
+    $query = $conexao->prepare($sql);
+    $query->bindValue(":id", $id, PDO::PARAM_INT);
+    $query->execute();
+    
+    return $query->fetch(PDO::FETCH_ASSOC) ?: null;
 }
