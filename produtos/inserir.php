@@ -49,17 +49,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(empty($erros)){
         try {
-            
+            //Iniciamos uma transação cujas operações serão feitas de forma agrupada
             $conexao->beginTransaction();
 
-            inserirProduto($conexao, $produto);
+            $produto_id = inserirProduto($conexao, $produto);
+
             if($detalhes['peso'] || $detalhes['dimensoes'] || $detalhes['codigo_barras'] || $detalhes['data_validade']){
+                //Adicionando o ID do novo produto aos detalhes antes de inserir o registro.
+                $detalhes['produto_id'] = $produto_id;
                 inserirDetalhesDoProduto($conexao, $detalhes);
             }
+            //Commit aplica/conclui as operações da transação
+            $conexao->commit();
+
+            header("location:listar.php");
+            exit;
 
         } catch (Throwable $erro) {
+            //Se algo deu errado, desfaz as alterações.
+            $conexao->rollBack();
 
-            $erros[] = "Erro ao inserir produto: <br>". $erro->getMessage();
+            if($erro->getCode() === '23000'){
+                $erros[] = "O código de barras já existe no sistema.";
+            }else{
+                 $erros[] = "Erro ao inserir produto: <br>". $erro->getMessage();
+            }
+
+
+           
             
         }
     }
@@ -88,19 +105,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h4>Produto</h4>
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input value="<?= $_POST['nome'] ?? '' ?>" type="text" class="form-control" id="nome" name="nome">
+            <input required value="<?= $_POST['nome'] ?? '' ?>" type="text" class="form-control" id="nome" name="nome">
 
             <label for="descricao" class="form-label mt-2">Descrição: </label>
             <textarea class="form-control" id="descricao" name="descricao" rows="3"><?= $_POST['descricao'] ?? '' ?></textarea>
 
             <label for="preco" class="form-label mt-2">Preço: </label>
-            <input value="<?= $_POST['preco'] ?? '' ?>" type="number" step="0.01" class="form-control" id="preco" name="preco">
+            <input required value="<?= $_POST['preco'] ?? '' ?>" type="number" step="0.01" class="form-control" id="preco" name="preco">
 
             <label for="quantidade" class="form-label mt-2">Quantidade: </label>
-            <input <?= $_POST['quantidade'] ?? '' ?> type="number" class="form-control" id="quantidade" name="quantidade" min="0">
+            <input required <?= $_POST['quantidade'] ?? '' ?> type="number" class="form-control" id="quantidade" name="quantidade" min="0">
 
             <label for="fornecedor_id" class="form-label">Fornecedor: </label>
-            <select name="fornecedor_id" id="fornecedor_id" class="form-select">
+            <select required name="fornecedor_id" id="fornecedor_id" class="form-select">
                 <option value=""><strong>Selecione um Fornecedor</strong></option>
                 <?php $fornecedores = buscarFornecedor($conexao);
                 foreach ($fornecedores as $fornecedor):
