@@ -3,29 +3,65 @@
 require_once __DIR__ . '/../config.php';
 $titulo = "Editar Produto |";
 require_once BASE_PATH . '/includes/cabecalho.php';
+require_once BASE_PATH .'/src/fornecedor_crud.php';
+require_once BASE_PATH . '/src/produtos_crud.php';
+require_once BASE_PATH . '/src/utils.php';
 
 exigirLogin();
+
+$id = sanitizar($_GET['id'], 'inteiro');
+$erro = [];
+
+if(!$id){
+    header('location:listar.php');
+    exit;
+}
+
+try {
+
+    $fornecedor = buscarFornecedorPorId($conexao, $id);
+    $produtos = buscarProdutoPorId($conexao, $id);
+    if (!$produtos) $erro[]= "Produto não encontrado!";
+    if (!$fornecedor) $erro[]= "Fornecedor não encontrado!";
+
+} catch (Throwable $error) {
+
+$erro[] = "Erro ao buscar produto<br>". $error->getMessage();
+    
+}
+
+
 
 ?>
 
 <section class="mb-4 border rounded-3 p-4 border-primary-subtle">
     <h3 class="text-center"><i class="bi bi-pencil-fill"></i> Editar Produto</h3>
 
+    <?php if (!empty($erros)): ?>
+        <div class="text-center">
+            <ul class="list-group">
+                <?php foreach ($erros as $erro): ?>
+                    <li class="list-group-item list-group-item-danger"><?= $erro ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+    <?php endif; ?>
+
     <form action="" method="post" class="w-75 mx-auto">
         <input type="hidden" name="id" value="ID do produto...">
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome" value="Nome do produto">
+            <input type="text" class="form-control" id="nome" name="nome" value="<?= $produtos['nome'] ?>">
 
             <label for="descricao" class="form-label">Descrição: </label>
-            <input type="text" class="form-control" id="descricao" name="descricao" value="Descrição do produto">
+            <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $produtos['descricao'] ?>">
 
             <label for="fornecedor" class="form-label">Fornecedor: </label>
             <select class="form-select" id="fornecedor" name="fornecedor">
 
-                <option value="1" selected>Fornecedor 1</option>
-                <option value="2">Fornecedor 2</option>
-                <option value="3">Fornecedor 3</option>
+                <option value="<?= $fornecedor['nome'] ?>"></option>
+
 
             </select>
             <label for="preco" class="form-label">Preço: </label>
