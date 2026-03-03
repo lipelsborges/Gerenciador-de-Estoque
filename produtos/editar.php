@@ -1,36 +1,85 @@
-<?php 
+<?php
 
 require_once __DIR__ . '/../config.php';
 $titulo = "Editar Produto |";
 require_once BASE_PATH . '/includes/cabecalho.php';
-require_once BASE_PATH .'/src/fornecedor_crud.php';
+require_once BASE_PATH . '/src/fornecedor_crud.php';
 require_once BASE_PATH . '/src/produtos_crud.php';
 require_once BASE_PATH . '/src/utils.php';
 
 exigirLogin();
 
 $id = sanitizar($_GET['id'], 'inteiro');
-$erro = [];
+$erros = [];
 
-if(!$id){
+if (!$id) {
     header('location:listar.php');
     exit;
 }
 
 try {
 
-    
-    $produto = buscarProdutoPorId($conexao, $id);
-    if (!$produto) $erro[]= "Produto não encontrado!";
-    
 
+    $produto = buscarProdutoPorId($conexao, $id);
+    if (!$produto) $erros[] = "Produto não encontrado!";
 } catch (Throwable $error) {
 
-$erro[] = "Erro ao buscar produto<br>". $error->getMessage();
-    
+    $erros[] = "Erro ao buscar produto<br>" . $error->getMessage();
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $produtoAtualizado = [
+        "nome" => sanitizar($_POST['nome'], 'texto'),
+        "descricao" => sanitizar($_POST['descricao'], 'texto') ?: null,
+        "preco" => sanitizar($_POST['preco'] ?? 0, 'decimal'),
+        "quantidade" => sanitizar($_POST['quantidade'] ?? 0, 'inteiro'),
+        "fornecedor_id" => sanitizar($_POST['fornecedor_id'] ?? 0, 'inteiro'),
+        "id" => $id, //importante ter o id do produto visando o processo de upadate do banco.
+    ];
+
+    $detalhesAtualizados = [
+        "peso" => sanitizar($_POST['peso'], 'float') ?: null,
+        "dimensoes" => sanitizar($_POST['dimensoes'], 'dimensao'),
+        "codigo_barras" => sanitizar($_POST['codigo_barras']) ?: null,
+        "data_validade" => sanitizar($_POST['data_validade'], 'data'),
+        "produto_id" => $id //importante ter o id do produto visando o processo de upadate do banco.
+    ];
+}
+
+if (empty($produtoAtualizado['nome'])) {
+    $erros[] = "O nome é obrigatório";
+}
+
+if (empty($produtoAtualizado['fornecedor_id'])) {
+    $erros[] = "Escolha um fornecedor";
+}
+
+// -------------------------------------------------
+
+if (trim($_POST['preco']) === '') {
+    $erros[] = "O preço é obrigatório";
+} elseif ($produtoAtualizado['preco'] < 0) {
+    $erros[] = "Informe um preço válido";
+}
+
+if (trim($_POST['quantidade']) === '') {
+    $erros[] = "A quantidade é obrigatório";
+} elseif ($produtoAtualizado['quantidade'] < 0) {
+    $erros[] = "Informe uma quantidade válida";
+}
+
+if (empty(!$erros)) {
+
+    try {
+    } catch (Throwable $error) {
+        if ($error->getCode() === '23000') {
+            $erros[] = "O código de barras já existe no sistema.";
+        } else {
+            $erros[] = "Erro ao inserir produto: <br>" . $error->getMessage();
+        }
+    }
+}
 
 
 ?>
@@ -52,9 +101,9 @@ $erro[] = "Erro ao buscar produto<br>". $error->getMessage();
     <form action="" method="post" class="w-75 mx-auto">
 
         <legend>Produto</legend>
-        
-        <input type="hidden" name="detalhe_id" value="<?=$produto['detalhe_id'] ?? '' ?>">
-        <input type="hidden" name="id" value="<?=$produto['produto_id'] ?? '' ?>">
+
+        <input type="hidden" name="detalhe_id" value="<?= $produto['detalhe_id'] ?? '' ?>">
+        <input type="hidden" name="id" value="<?= $produto['produto_id'] ?? '' ?>">
 
         <div class="form-group">
 
@@ -65,21 +114,21 @@ $erro[] = "Erro ao buscar produto<br>". $error->getMessage();
             <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $produto['descricao'] ?>">
 
             <label for="fornecedor" class="form-label">Fornecedor: </label>
-            <select class="form-select" id="fornecedor" name="fornecedor">
+            <select class="form-select" id="fornecedor" name="fornecedor_id">
 
                 <option value=""></option>
 
-                <?php  
+                <?php
 
-                    $fornecedores = buscarFornecedor($conexao);
-                    foreach($fornecedores as $fornecedor):
-                        
+                $fornecedores = buscarFornecedor($conexao);
+                foreach ($fornecedores as $fornecedor):
+
                     $selecionado = ($fornecedor['id'] === $produto['fornecedor_id']) ? 'selected' : '';
                 ?>
-                <option value="<?= $fornecedor['id'] ?>" <?= $selecionado ?>><?= $fornecedor['nome'] ?></option>
-                <?php  
-                
-                    endforeach;
+                    <option value="<?= $fornecedor['id'] ?>" <?= $selecionado ?>><?= $fornecedor['nome'] ?></option>
+                <?php
+
+                endforeach;
 
                 ?>
 
@@ -91,36 +140,36 @@ $erro[] = "Erro ao buscar produto<br>". $error->getMessage();
 
 
             <label for="quantidade" class="form-label">Quantidade: </label>
-            <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" value="<?= $produto['quantidade']?>">
+            <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" value="<?= $produto['quantidade'] ?>">
 
 
             <h4 class="mt-4">Detalhe do Produto</h4>
 
 
             <label for="detalhes" class="form-label">Peso(kg): </label>
-            <input type="number" step="0.01" class="form-control" id="peso" name="peso" value="<?= $produto['peso'] ?? '' ?>"> 
+            <input type="number" step="0.01" class="form-control" id="peso" name="peso" value="<?= $produto['peso'] ?? '' ?>">
 
 
 
             <label for="detalhes" class="form-label mt-2">Dimensões (LxAxP): </label>
-            <input type="text" class="form-control" id="dimensoes" name="dimensoes" value="<?= $produto['dimensoes'] ?? ''?>">
+            <input type="text" class="form-control" id="dimensoes" name="dimensoes" value="<?= $produto['dimensoes'] ?? '' ?>">
 
 
 
             <label for="codigo_barras" class="form-label mt-2">Código de Barras: </label>
-            <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" value="<?= $produto['codigo_barras'] ?? ''?>">
+            <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" value="<?= $produto['codigo_barras'] ?? '' ?>">
 
 
 
             <label for="data_validade" class="form-label">Data de Validade: </label>
             <input type="date" class="form-control" id="data_validade" name="data_validade" value="<?= $produto['data_validade'] ?? '' ?>">
-            
 
-            
+
+
         </div>
         <a href="<?= BASE_URL ?>/produtos/listar.php" class="btn btn-secondary my-4"><i class="bi bi-arrow-left"></i> Voltar</a>
-        <button type="submit" class="btn btn-warning my-4"><i class="bi bi-arrow-clockwise"></i>  Salvar Alterações</button>
-        
+        <button type="submit" class="btn btn-warning my-4"><i class="bi bi-arrow-clockwise"></i> Salvar Alterações</button>
+
     </form>
 
 </section>
