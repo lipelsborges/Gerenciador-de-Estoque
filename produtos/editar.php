@@ -42,44 +42,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "peso" => sanitizar($_POST['peso'], 'float') ?: null,
         "dimensoes" => sanitizar($_POST['dimensoes'], 'dimensao'),
         "codigo_barras" => sanitizar($_POST['codigo_barras']) ?: null,
-        "data_validade" => sanitizar($_POST['data_validade'], 'data'),
+        "data_validade" => sanitizar($_POST['data_validade']) ? sanitizar($_POST['data_valdiade'], 'data') : null,
         "produto_id" => $id //importante ter o id do produto visando o processo de upadate do banco.
     ];
-}
 
-if (empty($produtoAtualizado['nome'])) {
-    $erros[] = "O nome é obrigatório";
-}
+    if (empty($produtoAtualizado['nome'])) {
+        $erros[] = "O nome é obrigatório";
+    }
 
-if (empty($produtoAtualizado['fornecedor_id'])) {
-    $erros[] = "Escolha um fornecedor";
-}
+    if (empty($produtoAtualizado['fornecedor_id'])) {
+        $erros[] = "Escolha um fornecedor";
+    }
 
-// -------------------------------------------------
+    // -------------------------------------------------
 
-if (trim($_POST['preco']) === '') {
-    $erros[] = "O preço é obrigatório";
-} elseif ($produtoAtualizado['preco'] < 0) {
-    $erros[] = "Informe um preço válido";
-}
+    if (trim($_POST['preco']) === '') {
+        $erros[] = "O preço é obrigatório";
+    } elseif ($produtoAtualizado['preco'] < 0) {
+        $erros[] = "Informe um preço válido";
+    }
 
-if (trim($_POST['quantidade']) === '') {
-    $erros[] = "A quantidade é obrigatório";
-} elseif ($produtoAtualizado['quantidade'] < 0) {
-    $erros[] = "Informe uma quantidade válida";
-}
+    if (trim($_POST['quantidade']) === '') {
+        $erros[] = "A quantidade é obrigatório";
+    } elseif ($produtoAtualizado['quantidade'] < 0) {
+        $erros[] = "Informe uma quantidade válida";
+    }
 
-if (empty(!$erros)) {
+    if (empty($erros)) {
 
-    try {
-    } catch (Throwable $error) {
-        if ($error->getCode() === '23000') {
-            $erros[] = "O código de barras já existe no sistema.";
-        } else {
-            $erros[] = "Erro ao inserir produto: <br>" . $error->getMessage();
+        try {
+
+            $conexao->beginTransaction();
+
+            atualizarProduto($conexao, $produtoAtualizado);
+
+            // Verificar se já existem detalhes para este produto
+            $temDetalhes = !empty($produto['detalhe_id']);
+
+            $detalhesDigitados = !empty(array_filter([
+                $detalhesAtualizados['peso'],
+                $detalhesAtualizados['dimensoes'],
+                $detalhesAtualizados['codigo_barras'],
+                $detalhesAtualizados['data_validade']
+
+            ]));
+
+            if($temDetalhes){
+                atualizarDetalhesDoProduto($conexao, $detalhesAtualizados);
+            }else if($detalhesDigitados){
+                // Se não tem detalhes do produto, e o usúario digitou algum detalhe, entao é
+                // necessario inserir um novo registro 
+                inserirDetalhesDoProduto($conexao, $detalhesAtualizados);
+            }
+
+            $conexao->commit();
+            header("location:listar.php");
+            exit;
+
+
+        } catch (Throwable $error) {
+
+              if($conexao->inTransaction()){
+                $conexao->rollBack();
+               }
+
+
+            if ($error->getCode() === '23000') {
+                $erros[] = "O código de barras já existe no sistema.";
+            } else {
+                $erros[] = "Erro ao inserir produto: <br>" . $error->getMessage();
+            }
         }
     }
 }
+
+
 
 
 ?>
@@ -108,13 +145,13 @@ if (empty(!$erros)) {
         <div class="form-group">
 
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome" value="<?= $produto['nome'] ?>">
+            <input required type="text" class="form-control" id="nome" name="nome" value="<?= $produto['nome'] ?>">
 
             <label for="descricao" class="form-label">Descrição: </label>
             <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $produto['descricao'] ?>">
 
             <label for="fornecedor" class="form-label">Fornecedor: </label>
-            <select class="form-select" id="fornecedor" name="fornecedor_id">
+            <select required class="form-select" id="fornecedor" name="fornecedor_id">
 
                 <option value=""></option>
 
@@ -136,7 +173,7 @@ if (empty(!$erros)) {
             </select>
 
             <label for="preco" class="form-label">Preço: </label>
-            <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="<?= $produto['preco'] ?>">
+            <input required type="number" step="0.01" class="form-control" id="preco" name="preco" value="<?= $produto['preco'] ?>">
 
 
             <label for="quantidade" class="form-label">Quantidade: </label>
