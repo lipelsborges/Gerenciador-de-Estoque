@@ -80,7 +80,6 @@ require_once BASE_PATH . '/includes/cabecalho.php';
     <h3 class="text-center"><i class="bi bi-pencil-fill"></i> Editar Usuário</h3>
 
     <?php if ($erro):  ?>
-        <br>
         <p class="alert alert-danger text-center"><?= $erro ?></p>
     <?php endif; ?>
 
