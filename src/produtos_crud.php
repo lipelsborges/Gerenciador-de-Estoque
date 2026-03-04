@@ -148,3 +148,10 @@ function atualizarDetalhesDoProduto(PDO $conexao, array $detalhes): void
     $query->bindValue(":produto_id", $detalhes['produto_id'], PDO::PARAM_INT);
     $query->execute();
 }
+
+function excluirProduto(PDO $conexao, int $id):void {
+    $sql = "DELETE FROM produtos WHERE id= :id";
+    $query = $conexao->prepare($sql);
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+}
