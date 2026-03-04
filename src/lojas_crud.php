@@ -34,7 +34,7 @@
 
  }
 
- function excluirLoja($conexao, $id): void {
+ function excluirLoja(PDO $conexao, $id): void {
 
    $sql = 'DELETE FROM lojas WHERE id = :id';
 
@@ -42,6 +42,14 @@
    $query->bindValue(':id', $id, PDO::PARAM_INT);
    $query->execute();
 
+ }
 
+ function atualizarLoja(PDO $conexao, int $id, string $nome): void{
+
+  $sql = "UPDATE lojas SET nome = :nome WHERE id= :id";
+  $query = $conexao->prepare($sql);
+  $query->bindValue(':id', $id, PDO::PARAM_INT);
+  $query->bindValue(':nome', $nome, PDO::PARAM_STR);
+  $query->execute();
 
  }
