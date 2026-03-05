@@ -4,6 +4,8 @@
 
 
     $sql = "SELECT 
+        lp.loja_id,
+        lp.produto_id,
 	    l.nome 'nome_loja' ,
         pr.nome 'nome_produto',
 	    lp.estoque
@@ -18,15 +20,15 @@
 
  }
 
-function inserirEstoque($conexao, $nomeL, $nomeP, $estoque):void {
+function inserirEstoque($conexao, int $loja_id, int $produto_id, int $estoque):void {
 
 
-    $sql = 'INSERT INTO sys.lojas_produtos (nome_loja, nome_produto, estoque)
-    VALUES (:nome_loja, :nome_produto, :estoque)';
+    $sql = 'INSERT INTO sys.lojas_produtos (loja_id, produto_id, estoque)
+    VALUES (:loja_id, :produto_id, :estoque)';
 
     $query = $conexao->prepare($sql);
-    $query->bindValue(':nome_loja', $nomeL);
-    $query->bindValue(':nome_produto', $nomeP);
+    $query->bindValue(':loja_id', $loja_id);
+    $query->bindValue(':produto_id', $produto_id);
     $query->bindValue(':estoque', $estoque);
     $query->execute();
 
