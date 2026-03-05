@@ -7,11 +7,11 @@ require_once BASE_PATH . '/src/estoque_crud.php';
 
 exigirLogin();
 $erro = null;
-$lojas = [];
+$estoques = [];
 
 try {
     
-    $lojas = buscarEstoque($conexao);
+    $estoques = buscarEstoque($conexao);
 
 } catch (Throwable $error) {
 
@@ -29,22 +29,13 @@ try {
         </a>
     </p>
 
-    <form action="" method="get" class="mx-auto my-4">
-        <div class="row  g-2 justify-content-center mb-3">
-            <div class="col-auto">
-                <input  type="search" name="search" class="form-control" placeholder="Buscar Loja ou Produto...">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-success w-100">
-                    <i class="bi bi-search"></i> Buscar
-                </button>
-            </div>
-        </div>
-    </form>
+      <?php if($erro):  ?>
+            <p class="alert alert-danger text-center"><?=$erro ?></p>
+      <?php endif; ?>
 
     <div class="table-responsive">
         <table class="table table-hover caption-top">
-            <caption>Quantidade de registros: <?= count($lojas) ?></caption>
+            <caption>Quantidade de registros: <?= count($estoques) ?></caption>
             <thead class="align-middle table-light">
                 <tr>
                     <th >Loja</th>
@@ -54,13 +45,13 @@ try {
                 </tr>
             </thead>
             <tbody>
-<?php foreach($lojas as $loja): ?>
+<?php foreach($estoques as $estoque): ?>
                 <tr>
-                    <td ><?= $loja['nome_loja'] ?></td>
-                    <td ><?= $loja['nome_produto'] ?></td>
-                    <td ><?= $loja['estoque'] ?></td>
-                    <td ><a href="editar.php" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
-                    <td ><a href="excluir.php" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
+                    <td ><?= $estoque['nome_loja'] ?></td>
+                    <td ><?= $estoque['nome_produto'] ?></td>
+                    <td ><?= $estoque['estoque'] ?></td>
+                    <td ><a href="editar.php?loja_id=<?= $estoque['loja_id'] ?>&produto_id=<?= $estoque['produto_id'] ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                    <td ><a href="excluir.php?loja_id=<?= $estoque['loja_id'] ?>&produto_id=<?= $estoque['produto_id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></td>
                 </tr>
 <?php endforeach; ?>
             </tbody>
