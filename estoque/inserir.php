@@ -22,26 +22,38 @@ try {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $loja_id = sanitizar($_POST['loja_id'], 'inteiro');
+    $produto_id = sanitizar($_POST['produto_id'], 'inteiro');
     $estoque = sanitizar($_POST['estoque'], 'inteiro');
 
-    if (empty($estoque)) {
+    if ($loja_id && $produto_id) {
 
-        $erro = 'Preencha o campo estoque!';
-
-    } else {
-
-        try {
-
-            inserirEstoque($conexao, $_POST['loja_id'], $_POST['produto_id'], $estoque);
+        try{
+            inserirEstoque($conexao, $loja_id, $produto_id, $estoque);
             header('location:listar.php');
             exit;
+        }catch(PDOException $error){
+
+           $codigoErro =  $error->errorInfo[1] ?? null;
+           if($codigoErro === 1062){
+                $erro = "Este produto já está cadastrado no estoque desta loja.";
+           }elseif($codigoErro === 4025){
+                $erro = "O estoque não pode ser negativo.";
+           } else {
+                $erro = "Erro ao inserir os dados.". $error->getMessage();
+           }
 
         } catch (Throwable $error) {
-
-            $erro = "Erro ao inserir o Estoque. <br>" . $error->getMessage();
+            
+            $erro = "Erro inesperado. <br>" . $error->getMessage();
 
         }
+    } else {
+        $erro = "Por favor, preencha todos os campos. ";
     }
+
+       
+    
 }
 
 
@@ -57,7 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="post" class="w-75 mx-auto">
         <div class="form-group">
             <label for="loja" class="form-label">Loja: </label>
-            <select class="form-select" name="loja_id" id="loja">
+            <select required class="form-select" name="loja_id" id="loja">
+                <option value="">Selecione a loja</option>
                 <?php foreach ($lojas as $loja): ?>
                     <option value="<?= $loja['id'] ?>"> <?= $loja['nome'] ?? '' ?> </option>
                 <?php endforeach; ?>
@@ -66,15 +79,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="form-group">
             <label for="produto_id" class="form-label">Produto: </label>
-            <select class="form-select" name="produto_id" id="produto">
+            <select required class="form-select" name="produto_id" id="produto">
+                <option value="">Selecione o Produto</option>
                 <?php foreach ($produtos as $produto): ?>
-                    <option value="<?= $produto['nome'] ?>"><?= $produto['nome'] ?? '' ?></option>
+                    <option value="<?= $produto['id'] ?>"><?= $produto['nome'] ?? '' ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
         <div class="form-group">
             <label for="estoque" class="form-label">Estoque: </label>
-            <input type="number" class="form-control" id="estoque" name="estoque" min="0" required>
+            <input value="<?= $_POST['estoque'] ?? 0 ?>" type="number" class="form-control" id="estoque" name="estoque" min="0" required>
         </div>
         <a href="listar.php" class="btn btn-secondary my-4"><i class="bi bi-arrow-left-circle"></i> Voltar</a>
         <button class="btn btn-success my-4" type="submit"><i class="bi bi-check-circle"></i> Salvar</button>
