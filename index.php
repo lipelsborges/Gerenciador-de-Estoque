@@ -5,47 +5,19 @@ require_once __DIR__ . '/config.php';
 exigirLogin();
 
 include_once BASE_PATH . '/includes/cabecalho.php';
-include_once BASE_PATH . '/src/fornecedor_crud.php';
-include_once BASE_PATH .'/src/produtos_crud.php';
-include_once BASE_PATH .'src/lojas_crud.php';
+require_once BASE_PATH . '/src/resumo_crud.php';
+require_once BASE_PATH . '/src/utils.php';
 
-$fornecedor = [];
-$lojas = [];
-$produtos = [];
+
 $erro = null;
 
-
-try {
-
-    $fornecedor = buscarFornecedor($conexao);
-
-} catch (Throwable $error) {
-
-    $erro = "Erro ao buscar Fornecedores!". $error->getMessage();
-
-}
-
-try {
-
-    $produtos = buscarProduto($conexao);
-    
-} catch (Throwable $error) {
-
-    $error = 'Erro ao buscar Produtos!'. $error->getMessage();
-
-}
+$totalFornecedor = contarFornecedor($conexao);
+$totalProdutos = contarProdutos($conexao);
+$totalLojas = contarLojas($conexao);
+$totalEstoqueBaixo = contarEstoqueBaixo($conexao);
+$totalLojaSemRegistroDeEstoque = contarLojasSemRegistroDeEstoque($conexao);
 
 
-try {
-
-    $lojas = buscarLoja($conexao);
-
-
-} catch (Throwable $error) {
-    
-    $erro = 'Erro ao buscar as Lojas'. $error -> getMessage();
-
-}
 
 
 ?>
@@ -55,27 +27,27 @@ try {
     <div class="row">
 
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary"><?= count($produtos) ?></span></h4>
+            <h4><span class="badge text-bg-primary"><?= $totalProdutos?></span></h4>
             <p><b>Produtos cadastrados</b></p>
 
         </div>
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary"><?= count($fornecedor) ?></span></h4>
+            <h4><span class="badge text-bg-primary"><?= $totalFornecedor ?></span></h4>
             <p><b>Fornecedores</b></p>
 
         </div>
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary"><?= count($lojas) ?></span></h4>
+            <h4><span class="badge text-bg-primary"><?= $totalLojas ?></span></h4>
             <p><b>Lojas ativas</b></p>
 
         </div>
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary">0</span></h4>
+            <h4><span class="badge text-bg-primary"><?= $totalLojaSemRegistroDeEstoque?></span></h4>
             <p><b>Lojas sem estoque</b></p>
 
         </div>
         <div class="col-6 col-md-4">
-            <h4><span class="badge text-bg-primary">0</span></h4>
+            <h4><span class="badge text-bg-primary"><?= $totalEstoqueBaixo ?></span></h4>
             <p><b>Estoque < 5</b>
             </p>
 
