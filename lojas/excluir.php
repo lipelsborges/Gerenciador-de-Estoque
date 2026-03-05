@@ -55,6 +55,7 @@ if(isset($_GET['confirmar-exclusao']) && !$erro)
 
     <div class="alert alert-danger w-50 text-center mx-auto">
         <p>Tem certeza que deseja excluir a loja <b><?= $lojas['nome'] ?? '' ?></b>?</p>
+        <p>Caso existam registros de estoque dela, <b>eles também serão excluídos</b>.</p>
         <a href="listar.php" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Não</a>
         <a href="?id=<?=$lojas['id'] ?>&confirmar-exclusao" class="btn btn-danger"><i class="bi bi-check-circle"></i> Sim</a>
     </div>

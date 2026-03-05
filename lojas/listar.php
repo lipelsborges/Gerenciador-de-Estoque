@@ -33,18 +33,6 @@ try {
         </a>
     </p>
 
-    <form action="" method="get" class="mx-auto my-4">
-        <div class="row  g-2 justify-content-center mb-3">
-            <div class="col-auto">
-                <input  type="search" name="search" class="form-control" placeholder="Buscar loja...">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-success w-100">
-                    <i class="bi bi-search"></i> Buscar
-                </button>
-            </div>
-        </div>
-    </form>
 
       <?php if($erro):  ?>
         <p class="alert alert-danger text-center"><?=$erro ?></p>

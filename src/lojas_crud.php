@@ -2,7 +2,7 @@
 
  function buscarLoja(PDO $conexao): array{
 
-    $sql = 'SELECT * FROM lojas';
+    $sql = 'SELECT * FROM lojas ORDER BY id';
 
     $query = $conexao->prepare($sql);
     $query->execute();
