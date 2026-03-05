@@ -41,14 +41,14 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
     <h3 class="text-center"><i class="bi bi-plus-circle-fill"></i> Adicionar Loja</h3>
 
     <?php if($erro):  ?>
-        <br><p class="alert alert-danger text-center "><strong><?=$erro ?></strong></p>
+        <p class="alert alert-danger text-center "><?=$erro ?></p>
     <?php endif; ?>
 
 
     <form action="" method="post" class="w-75 mx-auto">
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome">
+            <input required value="<?= $_POST['nome'] ?? '' ?>" type="text" class="form-control" id="nome" name="nome">
         </div>
         <a href="listar.php" class="btn btn-secondary my-4"><i class="bi bi-arrow-left-circle"></i> Voltar</a>
         <button class="btn btn-success my-4" type="submit"><i class="bi bi-check-circle"></i>  Salvar</button>

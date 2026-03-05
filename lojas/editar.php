@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="hidden" name="id" value="<?= $lojas['id'] ?? ''?>">
         <div class="form-group">
             <label for="nome" class="form-label">Nome: </label>
-            <input type="text" class="form-control" id="nome" name="nome" value="<?= $lojas['nome'] ?? ''?>">
+            <input required type="text" class="form-control" id="nome" name="nome" value="<?= $lojas['nome'] ?? ''?>">
         </div>
         <button class="btn btn-warning my-4" type="submit"><i class="bi bi-arrow-clockwise"></i>  Salvar Alterações</button>
     </form>
