@@ -68,3 +68,10 @@ function formatarPreco(float $preco): string
 {
     return "R$ " . number_format($preco, 2, ",", ".");
 }
+
+function ultimaAtualizacao(): string {
+
+     date_default_timezone_set("America/Sao_Paulo");
+     return date("d/m/Y H:i:s");
+
+}
