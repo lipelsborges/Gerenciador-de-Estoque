@@ -8,6 +8,7 @@ $titulo = "Fornecedores |";
 require_once BASE_PATH . '/includes/cabecalho.php'; 
 require_once BASE_PATH . '/src/fornecedor_crud.php';
 
+
 exigirLogin();
 
 $erro = null;
