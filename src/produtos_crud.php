@@ -11,7 +11,7 @@ function buscarProduto(PDO $conexao, string $busca = ''): array
             f.nome "fornecedor",
             pr.preco,
             dpr.data_validade
-        FROM sys.produtos pr
+        FROM produtos pr
         LEFT JOIN fornecedores f on f.id = pr.fornecedor_id
         LEFT JOIN detalhes_produto dpr on dpr.produto_id = pr.id';
 
@@ -92,7 +92,7 @@ function buscarProdutoPorId(PDO $conexao, int $id): ?array
             dpr.peso,
             dpr.dimensoes,
             dpr.codigo_barras
-        FROM sys.produtos pr
+        FROM produtos pr
         LEFT JOIN fornecedores f on f.id = pr.fornecedor_id
         LEFT JOIN detalhes_produto dpr on dpr.produto_id = pr.id
         WHERE pr.id = :id';
