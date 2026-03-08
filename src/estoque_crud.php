@@ -9,7 +9,7 @@
 	    l.nome 'nome_loja' ,
         pr.nome 'nome_produto',
 	    lp.estoque
-    FROM sys.lojas_produtos lp
+    FROM lojas_produtos lp
     INNER JOIN lojas l ON l.id = lp.loja_id
     INNER JOIN produtos pr ON pr.id = lp.produto_id
     ORDER BY l.nome ASC";
@@ -23,7 +23,7 @@
 function inserirEstoque($conexao, int $loja_id, int $produto_id, int $estoque):void {
 
 
-    $sql = 'INSERT INTO sys.lojas_produtos (loja_id, produto_id, estoque)
+    $sql = 'INSERT INTO lojas_produtos (loja_id, produto_id, estoque)
     VALUES (:loja_id, :produto_id, :estoque)';
 
     $query = $conexao->prepare($sql);
